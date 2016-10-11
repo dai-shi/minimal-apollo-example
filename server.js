@@ -19,8 +19,12 @@ const typeDefs = [`
   type Query {
     posts(keyword: String): [Post]
   }
+  type Mutation {
+    addPost(name: String, title: String, content: String): Post
+  }
   schema {
     query: Query
+    mutation: Mutation
   }
   `];
 
@@ -29,6 +33,12 @@ const resolvers = {
     posts(root, args) {
       return postsData.filter(post =>
         !args.keyword || post.content.indexOf(args.keyword) >= 0);
+    },
+  },
+  Mutation: {
+    addPost(root, doc) {
+      postsData.push(doc);
+      return doc;
     },
   },
 };
