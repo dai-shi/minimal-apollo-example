@@ -18,6 +18,21 @@ const query = gql`{
   }
 }`;
 
-client.query({ query }).then(({ data }) => {
-  document.getElementById('result').innerHTML = JSON.stringify(data.posts, null, 2);
-});
+const getPosts = () => {
+  client.query({ query, forceFetch: true }).then(({ data }) => {
+    document.getElementById('result').innerHTML = JSON.stringify(data.posts, null, 2);
+  });
+};
+
+getPosts();
+
+
+const mutation = gql`mutation {
+  addPost(name: "foo name", title: "foo title", content: "foo content") {
+    name
+    title
+    content
+  }
+}`;
+
+client.mutate({ mutation }).then(getPosts);
