@@ -24,7 +24,7 @@ observableQuery.subscribe({ next: ({ data }) => {
 
 
 const mutation = gql`mutation {
-  addPost(name: "foo name", title: "foo title", content: "foo content") {
+  addPost(name: "Mary", title: "Learn JS", content: "it is fun!") {
     name
     title
     content

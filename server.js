@@ -6,8 +6,8 @@ const graphiqlExpress = require('apollo-server').graphiqlExpress;
 const makeExecutableSchema = require('graphql-tools').makeExecutableSchema;
 
 const postsData = [
-  { name: 'Teru', title: '初めてのGraphQL', content: '勉強中aab' },
-  { name: 'Dais', title: '初めてのApollo', content: '勉強中aac' },
+  { name: 'John', title: '初めてのGraphQL', content: 'apple orange' },
+  { name: 'Mike', title: '初めてのApollo', content: 'apple grape' },
 ];
 
 const typeDefs = [`
