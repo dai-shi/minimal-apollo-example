@@ -6,11 +6,9 @@ const createNetworkInterface = apolloClient.createNetworkInterface;
 const gql = graphqlTag.default;
 
 const networkInterface = createNetworkInterface('/graphql');
-const client = new ApolloClient({
-  networkInterface,
-});
+const client = new ApolloClient({ networkInterface });
 
-const query = gql`{
+const query = gql`query {
   posts {
     name
     title
@@ -18,13 +16,11 @@ const query = gql`{
   }
 }`;
 
-const getPosts = () => {
-  client.query({ query, forceFetch: true }).then(({ data }) => {
-    document.getElementById('result').innerHTML = JSON.stringify(data.posts, null, 2);
-  });
-};
+const observableQuery = client.watchQuery({ query, pollInterval: 1000 });
 
-getPosts();
+observableQuery.subscribe({ next: ({ data }) => {
+  document.getElementById('result').innerHTML = JSON.stringify(data.posts, null, 2);
+} });
 
 
 const mutation = gql`mutation {
@@ -35,4 +31,4 @@ const mutation = gql`mutation {
   }
 }`;
 
-client.mutate({ mutation }).then(getPosts);
+client.mutate({ mutation });
