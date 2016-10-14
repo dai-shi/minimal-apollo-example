@@ -2,11 +2,9 @@
 /* eslint-env browser */
 
 const ApolloClient = apolloClient.default;
-const createNetworkInterface = apolloClient.createNetworkInterface;
 const gql = graphqlTag.default;
 
-const networkInterface = createNetworkInterface('/graphql');
-const client = new ApolloClient({ networkInterface });
+const client = new ApolloClient();
 
 const query = gql`query {
   posts {
