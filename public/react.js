@@ -24,9 +24,8 @@ const mutation = gql`mutation {
   }
 }`;
 
-const App = ({ data }) => (
+const Posts = ({ data }) => (
   <div>
-    <h1>Welcome</h1>
     {data.loading ? <div>Loading...</div> :
       <ul>
         {data.posts.map(({ name, title, content }) => (
@@ -37,19 +36,39 @@ const App = ({ data }) => (
   </div>
 );
 
-App.propTypes = {
+Posts.propTypes = {
   data: React.PropTypes.shape({
     loading: React.PropTypes.bool.isRequired,
     posts: React.PropTypes.array,
   }).isRequired,
 };
 
-const AppWithData = graphql(query)(App);
+const PostsWithData = graphql(query)(Posts);
+
+const AddPost = ({ mutate }) => (
+  <div>
+    <button onClick={() => mutate()}>Add</button>
+  </div>
+);
+
+AddPost.propTypes = {
+  mutate: React.PropTypes.func.isRequired,
+};
+
+const AddPostWithData = graphql(mutation)(AddPost);
+
+const App = () => (
+  <div>
+    <h1>Posts</h1>
+    <PostsWithData />
+    <h1>AddPost</h1>
+    <AddPostWithData />
+  </div>
+);
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <AppWithData />
+    <App />
   </ApolloProvider>,
   document.getElementById('app')
 );
-
