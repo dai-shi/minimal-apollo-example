@@ -14,12 +14,12 @@ const query = gql`query {
   }
 }`;
 
+const showResult = (posts) => {
+  document.getElementById('result').innerHTML = JSON.stringify(posts, null, 2);
+};
+
 const observableQuery = client.watchQuery({ query, pollInterval: 1000 });
-
-observableQuery.subscribe({ next: ({ data }) => {
-  document.getElementById('result').innerHTML = JSON.stringify(data.posts, null, 2);
-} });
-
+observableQuery.subscribe({ next: ({ data }) => showResult(data.posts) });
 
 const mutation = gql`mutation {
   addPost(name: "Mary", title: "Learn JS", content: "it is fun!") {

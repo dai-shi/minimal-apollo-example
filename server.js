@@ -43,11 +43,7 @@ const resolvers = {
   },
 };
 
-const schema = makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
-
+const schema = makeExecutableSchema({ typeDefs, resolvers });
 const app = express();
 
 app.use('/graphql', bodyParser.json(), apolloExpress({ schema }));
