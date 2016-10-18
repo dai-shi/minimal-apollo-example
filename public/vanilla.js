@@ -21,12 +21,15 @@ const showResult = (posts) => {
 const observableQuery = client.watchQuery({ query, pollInterval: 1000 });
 observableQuery.subscribe({ next: ({ data }) => showResult(data.posts) });
 
-const mutation = gql`mutation {
-  addPost(name: "Mary", title: "Learn JS", content: "it is fun!") {
+const mutation = gql`mutation ($content: String){
+  addPost(name: "Mary", title: "No title", content: $content) {
     name
     title
     content
   }
 }`;
 
-client.mutate({ mutation });
+document.getElementById('add').addEventListener('click', () => {
+  const content = document.getElementById('content').value;
+  client.mutate({ mutation, variables: { content } });
+});
