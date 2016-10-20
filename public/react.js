@@ -16,8 +16,8 @@ const query = gql`query {
   }
 }`;
 
-const mutation = gql`mutation {
-  addPost(name: "Mary", title: "Learn JS", content: "it is fun!") {
+const mutation = gql`mutation ($content: String){
+  addPost(name: "Mary", title: "No title", content: $content) {
     name
     title
     content
@@ -45,9 +45,11 @@ Posts.propTypes = {
 
 const PostsWithData = graphql(query)(Posts);
 
+const getInputText = e => e.target.parentElement.getElementsByTagName('input')[0].value;
 const AddPost = ({ mutate }) => (
   <div>
-    <button onClick={() => mutate()}>Add</button>
+    <input />
+    <button onClick={e => mutate({ variables: { content: getInputText(e) } })}>Add</button>
   </div>
 );
 
