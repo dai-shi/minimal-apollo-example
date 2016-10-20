@@ -43,7 +43,9 @@ Posts.propTypes = {
   }).isRequired,
 };
 
-const PostsWithData = graphql(query)(Posts);
+const PostsWithData = graphql(query, {
+  options: { pollInterval: 1000 },
+})(Posts);
 
 const getInputText = e => e.target.parentElement.getElementsByTagName('input')[0].value;
 const AddPost = ({ mutate }) => (
